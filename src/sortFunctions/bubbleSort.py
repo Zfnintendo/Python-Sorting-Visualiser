@@ -1,3 +1,6 @@
+from GUI.SortGUI import SortGUI
+GUIHandler = SortGUI()
+
 class BubbleSort:
 
     def Sort(self, arr):
@@ -8,5 +11,6 @@ class BubbleSort:
             for j in range(n-i-1):
                 if arr[j] > arr[j+1]:
                     arr[j], arr[j+1] = arr[j+1], arr[j]
+                    GUIHandler.UpdateGraph(UpdatedArray=arr)
 
         return arr
