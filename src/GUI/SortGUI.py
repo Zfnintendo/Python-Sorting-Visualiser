@@ -40,10 +40,23 @@ class SortGUI:
 
             self.buttons.append(button)
 
-        #Text stuff
+        #Text stuff & Sliders & Stuff
         self.SortState = tk.Label(self.window, text="Sorting state: Idle", font="Courier" )
         self.SortState.pack(pady=10)
 
+        self.GenerationType = tk.StringVar(value="Randomised")
+
+        self.ArrayLength = tk.IntVar(value=200)
+        self.ArraySlider = tk.Scale(self.window, from_=5, to=200, orient="horizontal", variable=self.ArrayLength, label="Array Length")
+        self.ArraySlider.pack(pady=10)
+
+        self.OrderedButton = tk.Radiobutton(self.window, text="Ordered", variable=self.GenerationType, value="Ordered")
+        self.OrderedButton.pack()
+        self.RandomisedButton = tk.Radiobutton(self.window, text="Randomised", variable=self.GenerationType, value="Randomised")
+        self.RandomisedButton.pack()
+
+        self.GenerateButton = tk.Button(self.window, text="Generate array", command=self.GenerateArray)
+        self.GenerateButton.pack()
 
 
     def CreateGraph(self):
@@ -59,12 +72,12 @@ class SortGUI:
         self.MainArray = []
 
         GenerateArray = ArrayGeneration()
-        GenerateArray.Randomised(ArrLength=200)
+        GenerateArray.Randomised(ArrLength=self.ArrayLength.get())
         self.MainArray = GenerateArray.OriginalArray
 
         self.axis.bar(range(len(self.MainArray)), self.MainArray)
 
-        self.canvas.draw()
+        self.canvas.draw_idle()
 
     def UpdateGraph(self, UpdatedArray: list):
 
@@ -74,7 +87,23 @@ class SortGUI:
 
         self.axis.bar(range(len(self.MainArray)), self.MainArray)
         
-        self.canvas.draw()
+        self.canvas.draw_idle()
+
+    def GenerateArray(self):
+
+        ArrGen = ArrayGeneration()
+
+        if self.GenerationType.get() == "Randomised":
+            ArrGen.Randomised(ArrLength=self.ArrayLength.get())
+
+        elif self.GenerationType.get() == "Ordered":
+            ArrGen.Randomised(ArrLength=self.ArrayLength.get())
+
+        self.MainArray = ArrGen.OriginalArray
+
+        self.axis.clear()
+        self.axis.bar(range(len(self.MainArray)), self.MainArray)
+        self.canvas.draw_idle()
 
     def RunSort(self, file):
 
