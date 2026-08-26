@@ -97,7 +97,7 @@ class SortGUI:
             ArrGen.Randomised(ArrLength=self.ArrayLength.get())
 
         elif self.GenerationType.get() == "Ordered":
-            ArrGen.Randomised(ArrLength=self.ArrayLength.get())
+            ArrGen.Ordered(ArrLength=self.ArrayLength.get())
 
         self.MainArray = ArrGen.OriginalArray
 
